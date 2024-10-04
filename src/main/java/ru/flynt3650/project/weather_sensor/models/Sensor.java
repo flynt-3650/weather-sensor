@@ -18,7 +18,7 @@ public class Sensor {
     @NotEmpty
     private String sensorName;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "sensor")
     @JsonManagedReference
     private List<Measurement> measurements;
 

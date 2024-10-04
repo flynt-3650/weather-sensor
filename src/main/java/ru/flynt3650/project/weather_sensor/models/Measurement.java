@@ -1,11 +1,9 @@
 package ru.flynt3650.project.weather_sensor.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "measurement")
@@ -26,15 +24,15 @@ public class Measurement {
     @ManyToOne
     @JoinColumn(name = "sensor_id")
     @JsonIgnoreProperties("measurements")
-    private Sensor owner;
+    private Sensor sensor;
 
     public Measurement() {
     }
 
-    public Measurement(int temperature, boolean isRaining, Sensor owner) {
+    public Measurement(int temperature, boolean isRaining, Sensor sensor) {
         this.temperature = temperature;
         this.isRaining = isRaining;
-        this.owner = owner;
+        this.sensor = sensor;
     }
 
     public int getId() {
@@ -61,11 +59,11 @@ public class Measurement {
         isRaining = raining;
     }
 
-    public Sensor getOwner() {
-        return owner;
+    public Sensor getSensor() {
+        return sensor;
     }
 
-    public void setOwner(Sensor owner) {
-        this.owner = owner;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 }
