@@ -15,15 +15,17 @@ public class Measurement {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @NotNull
     @Column(name = "temperature")
     @Min(value = -100)
     @Max(value = 100)
-    private double temperature;
+    private Double temperature;
 
+    @NotNull
     @Column(name = "is_raining")
-    private boolean isRaining;
+    private Boolean isRaining;
 
     @NotNull
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -45,7 +47,15 @@ public class Measurement {
         this.sensor = sensor;
     }
 
-    public double getTemperature() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Double getTemperature() {
         return temperature;
     }
 
@@ -53,7 +63,7 @@ public class Measurement {
         this.temperature = temperature;
     }
 
-    public boolean isRaining() {
+    public Boolean isRaining() {
         return isRaining;
     }
 

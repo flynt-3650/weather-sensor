@@ -3,6 +3,7 @@ package ru.flynt3650.project.weather_sensor.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -13,10 +14,10 @@ public class Sensor {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
-    @NotEmpty
+    @NotNull
     private String name;
 
     @OneToMany(mappedBy = "sensor")
@@ -31,11 +32,11 @@ public class Sensor {
         this.measurements = measurements;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
