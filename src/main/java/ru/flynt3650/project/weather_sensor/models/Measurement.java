@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "measurement")
@@ -34,7 +35,7 @@ public class Measurement {
 
     @ManyToOne
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
-    @JsonBackReference // not sure
+    @JsonBackReference
     private Sensor sensor;
 
     public Measurement() {
@@ -85,5 +86,33 @@ public class Measurement {
 
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Measurement that = (Measurement) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(temperature, that.temperature)
+                && Objects.equals(isRaining, that.isRaining)
+                && Objects.equals(createdAt, that.createdAt)
+                && Objects.equals(sensor, that.sensor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, temperature, isRaining, createdAt, sensor);
+    }
+
+    @Override
+    public String toString() {
+        return "Measurement{" +
+                "id=" + id +
+                ", temperature=" + temperature +
+                ", isRaining=" + isRaining +
+                ", createdAt=" + createdAt +
+                ", sensor=" + sensor +
+                '}';
     }
 }

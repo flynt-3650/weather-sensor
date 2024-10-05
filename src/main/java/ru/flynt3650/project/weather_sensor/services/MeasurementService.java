@@ -7,6 +7,7 @@ import ru.flynt3650.project.weather_sensor.models.Measurement;
 import ru.flynt3650.project.weather_sensor.repositories.MeasurementRepository;
 import ru.flynt3650.project.weather_sensor.util.MeasurementNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,5 +27,15 @@ public class MeasurementService {
 
     public List<Measurement> findAll() {
         return measurementRepository.findAll();
+    }
+
+    @Transactional
+    public void save(Measurement measurement) {
+        enrichMeasurement(measurement);
+        measurementRepository.save(measurement);
+    }
+
+    private void enrichMeasurement(Measurement measurement) {
+        measurement.setCreatedAt(LocalDateTime.now());
     }
 }

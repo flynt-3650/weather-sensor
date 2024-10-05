@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sensor")
@@ -54,5 +55,29 @@ public class Sensor {
 
     public void setMeasurements(List<Measurement> measurements) {
         this.measurements = measurements;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sensor sensor = (Sensor) o;
+        return Objects.equals(id, sensor.id)
+                && Objects.equals(name, sensor.name)
+                && Objects.equals(measurements, sensor.measurements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, measurements);
+    }
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", measurements=" + measurements +
+                '}';
     }
 }
