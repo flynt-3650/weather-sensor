@@ -11,27 +11,27 @@ import java.util.List;
 public class Sensor {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
-    @Column(name = "sensor_name")
+    @Column(name = "name")
     @NotEmpty
-    private String sensorName;
+    private String name;
 
     @OneToMany(mappedBy = "sensor")
-    @JsonManagedReference
+    @JsonManagedReference // not sure
     private List<Measurement> measurements;
 
     public Sensor() {
     }
 
-    public Sensor(int id, String sensorName, List<Measurement> measurements) {
-        this.id = id;
-        this.sensorName = sensorName;
+    public Sensor(String name, List<Measurement> measurements) {
+        this.name = name;
         this.measurements = measurements;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -39,12 +39,12 @@ public class Sensor {
         this.id = id;
     }
 
-    public String getSensorName() {
-        return sensorName;
+    public String getName() {
+        return name;
     }
 
-    public void setSensorName(String sensorName) {
-        this.sensorName = sensorName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Measurement> getMeasurements() {
