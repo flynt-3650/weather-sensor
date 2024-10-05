@@ -52,7 +52,24 @@ public class MeasurementController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> create(@RequestBody MeasurementDto measurementDto) {
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid MeasurementDto measurementDto,
+                                             BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder();
+
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            for (var error : errors)
+                errorMessage
+                        .append(error.getField())
+                        .append(" - ")
+                        .append(error.getDefaultMessage())
+                        .append(";");
+
+            throw new MeasurementNotCreatedException(errorMessage.toString());
+        }
+
+
         String sensorName = measurementDto.getSensor().getName();
         Long sensorId = sensorService.findSensorIdByName(sensorName);
         measurementDto.getSensor().setId(sensorId);
