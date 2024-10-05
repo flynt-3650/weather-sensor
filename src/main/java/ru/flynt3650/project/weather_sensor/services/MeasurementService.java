@@ -29,6 +29,10 @@ public class MeasurementService {
         return measurementRepository.findAll();
     }
 
+    public Long findRainyDays() {
+        return measurementRepository.countRainyDays();
+    }
+
     @Transactional
     public void save(Measurement measurement) {
         enrichMeasurement(measurement);

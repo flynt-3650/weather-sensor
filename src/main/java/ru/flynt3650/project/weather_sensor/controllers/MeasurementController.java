@@ -52,8 +52,8 @@ public class MeasurementController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> create(@RequestBody @Valid MeasurementDto measurementDto,
-                                             BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> addMeasurement(@RequestBody @Valid MeasurementDto measurementDto,
+                                                     BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();
@@ -78,6 +78,11 @@ public class MeasurementController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/rainyDaysCount")
+    public ResponseEntity<Long> getRainyDaysCount() {
+        Long count = measurementService.findRainyDays();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
 
     @ExceptionHandler
     private ResponseEntity<MeasurementExceptionResponse> handleException(MeasurementNotFoundException e) {
