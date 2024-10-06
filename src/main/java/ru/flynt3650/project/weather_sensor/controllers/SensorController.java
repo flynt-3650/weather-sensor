@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.flynt3650.project.weather_sensor.dto.SensorDto;
 import ru.flynt3650.project.weather_sensor.models.Sensor;
 import ru.flynt3650.project.weather_sensor.services.SensorService;
+import ru.flynt3650.project.weather_sensor.util.SensorDtoValidator;
 import ru.flynt3650.project.weather_sensor.util.SensorExceptionResponse;
-import ru.flynt3650.project.weather_sensor.exceptions.SensorNotCreatedException;
-import ru.flynt3650.project.weather_sensor.exceptions.SensorNotFoundException;
+import ru.flynt3650.project.weather_sensor.util.exceptions.SensorNotCreatedException;
 
 import java.util.List;
 
@@ -22,17 +22,21 @@ import java.util.List;
 public class SensorController {
 
     private final SensorService sensorService;
+    private final SensorDtoValidator sensorDtoValidator;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public SensorController(SensorService sensorService, ModelMapper modelMapper) {
+    public SensorController(SensorService sensorService, SensorDtoValidator sensorDtoValidator, ModelMapper modelMapper) {
         this.sensorService = sensorService;
+        this.sensorDtoValidator = sensorDtoValidator;
         this.modelMapper = modelMapper;
     }
 
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> registerSensor(@RequestBody @Valid SensorDto sensorDto,
                                                      BindingResult bindingResult) {
+
+        sensorDtoValidator.validate(sensorDto, bindingResult);
 
         if (bindingResult.hasErrors()) {
             StringBuilder errorMessage = new StringBuilder();

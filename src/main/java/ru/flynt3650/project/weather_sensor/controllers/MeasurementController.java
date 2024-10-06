@@ -10,9 +10,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.flynt3650.project.weather_sensor.dto.MeasurementDto;
-import ru.flynt3650.project.weather_sensor.exceptions.MeasurementNotCreatedException;
-import ru.flynt3650.project.weather_sensor.exceptions.MeasurementNotFoundException;
-import ru.flynt3650.project.weather_sensor.exceptions.SensorNotFoundException;
+import ru.flynt3650.project.weather_sensor.dto.SensorDto;
+import ru.flynt3650.project.weather_sensor.util.SensorDtoValidator;
+import ru.flynt3650.project.weather_sensor.util.exceptions.MeasurementNotCreatedException;
+import ru.flynt3650.project.weather_sensor.util.exceptions.MeasurementNotFoundException;
+import ru.flynt3650.project.weather_sensor.util.exceptions.SensorNotFoundException;
 import ru.flynt3650.project.weather_sensor.models.Measurement;
 import ru.flynt3650.project.weather_sensor.services.MeasurementService;
 import ru.flynt3650.project.weather_sensor.services.SensorService;
@@ -31,7 +33,8 @@ public class MeasurementController {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public MeasurementController(MeasurementService measurementService, SensorService sensorService, ModelMapper modelMapper) {
+    public MeasurementController(MeasurementService measurementService, SensorService sensorService,
+                                 ModelMapper modelMapper) {
         this.measurementService = measurementService;
         this.sensorService = sensorService;
         this.modelMapper = modelMapper;

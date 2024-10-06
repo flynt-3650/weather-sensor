@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.flynt3650.project.weather_sensor.models.Sensor;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,4 +14,7 @@ public interface SensorRepository extends JpaRepository<Sensor, Long> {
 
     @Query("select s.id from Sensor s where s.name = :name")
     Optional<Long> findSensorIdByName(@Param("name") String name);
+
+    @Query("select s from Sensor s where s.name = :name")
+    Optional<List<Sensor>> findSensorsByName(@Param("name") String name);
 }

@@ -3,7 +3,7 @@ package ru.flynt3650.project.weather_sensor.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.flynt3650.project.weather_sensor.exceptions.MeasurementNotFoundException;
+import ru.flynt3650.project.weather_sensor.util.exceptions.MeasurementNotFoundException;
 import ru.flynt3650.project.weather_sensor.models.Measurement;
 import ru.flynt3650.project.weather_sensor.repositories.MeasurementRepository;
 
@@ -22,7 +22,8 @@ public class MeasurementService {
     }
 
     public Measurement findById(long id) {
-        return measurementRepository.findById(id).orElseThrow(() -> new MeasurementNotFoundException("Measurement with id '" + id + "' not found."));
+        return measurementRepository.findById(id)
+                .orElseThrow(() -> new MeasurementNotFoundException("Measurement with id '" + id + "' not found."));
     }
 
     public List<Measurement> findAll() {
