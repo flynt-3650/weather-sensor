@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+
 public class MeasurementDto {
 
     private Long id;
@@ -18,6 +20,8 @@ public class MeasurementDto {
 
     @NotNull
     private SensorDto sensor;
+
+    private LocalDateTime createdAt;
 
     public Long getId() {
         return id;
@@ -49,6 +53,14 @@ public class MeasurementDto {
 
     public void setSensor(SensorDto sensor) {
         this.sensor = sensor;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
