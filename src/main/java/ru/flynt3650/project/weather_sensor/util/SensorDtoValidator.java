@@ -32,7 +32,8 @@ public class SensorDtoValidator implements Validator {
 
         List<Sensor> existingSensors = sensorService.findSensorsByName(name);
         if (!existingSensors.isEmpty()) {
-            errors.rejectValue("name", "", "Sensor with name '" + name + "' already exists!");
+            errors.rejectValue("name", "", "Sensor with name '"
+                    + name + "' already exists!");
         }
     }
 }

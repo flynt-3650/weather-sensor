@@ -1,4 +1,5 @@
 package ru.flynt3650.project.weather_sensor.dto;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

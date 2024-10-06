@@ -26,7 +26,9 @@ public class SensorController {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public SensorController(SensorService sensorService, SensorDtoValidator sensorDtoValidator, ModelMapper modelMapper) {
+    public SensorController(SensorService sensorService, SensorDtoValidator sensorDtoValidator,
+                            ModelMapper modelMapper) {
+
         this.sensorService = sensorService;
         this.sensorDtoValidator = sensorDtoValidator;
         this.modelMapper = modelMapper;
