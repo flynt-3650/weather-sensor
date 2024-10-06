@@ -1,11 +1,12 @@
 package ru.flynt3650.project.weather_sensor.util;
 
-public class MeasurementExceptionResponse {
+import ru.flynt3650.project.weather_sensor.models.Sensor;
 
+public class SensorExceptionResponse {
     private String message;
-    private Long timestamp;
+    private long timestamp;
 
-    public MeasurementExceptionResponse(String message, long timestamp) {
+    public SensorExceptionResponse(String message, long timestamp) {
         this.message = message;
         this.timestamp = timestamp;
     }

@@ -10,14 +10,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.flynt3650.project.weather_sensor.dto.MeasurementDto;
-import ru.flynt3650.project.weather_sensor.dto.SensorDto;
+import ru.flynt3650.project.weather_sensor.exceptions.MeasurementNotCreatedException;
+import ru.flynt3650.project.weather_sensor.exceptions.MeasurementNotFoundException;
+import ru.flynt3650.project.weather_sensor.exceptions.SensorNotFoundException;
 import ru.flynt3650.project.weather_sensor.models.Measurement;
-import ru.flynt3650.project.weather_sensor.models.Sensor;
 import ru.flynt3650.project.weather_sensor.services.MeasurementService;
 import ru.flynt3650.project.weather_sensor.services.SensorService;
 import ru.flynt3650.project.weather_sensor.util.MeasurementExceptionResponse;
-import ru.flynt3650.project.weather_sensor.util.MeasurementNotCreatedException;
-import ru.flynt3650.project.weather_sensor.util.MeasurementNotFoundException;
+import ru.flynt3650.project.weather_sensor.util.SensorExceptionResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,7 +69,6 @@ public class MeasurementController {
             throw new MeasurementNotCreatedException(errorMessage.toString());
         }
 
-
         String sensorName = measurementDto.getSensor().getName();
         Long sensorId = sensorService.findSensorIdByName(sensorName);
         measurementDto.getSensor().setId(sensorId);
@@ -85,16 +84,16 @@ public class MeasurementController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<MeasurementExceptionResponse> handleException(MeasurementNotFoundException e) {
+    private ResponseEntity<MeasurementExceptionResponse> handleMeasurementNotFoundException(MeasurementNotFoundException e) {
         MeasurementExceptionResponse response = new MeasurementExceptionResponse(
-                "Measurement not found.", System.currentTimeMillis()
+                e.getMessage(), System.currentTimeMillis()
         );
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    private ResponseEntity<MeasurementExceptionResponse> handleException(MeasurementNotCreatedException e) {
+    private ResponseEntity<MeasurementExceptionResponse> handleMeasurementNotCreatedException(MeasurementNotCreatedException e) {
         MeasurementExceptionResponse response = new MeasurementExceptionResponse(
                 e.getMessage(), System.currentTimeMillis()
         );
@@ -102,21 +101,20 @@ public class MeasurementController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler
+    private ResponseEntity<SensorExceptionResponse> handleSensorNotFoundException(SensorNotFoundException e) {
+        SensorExceptionResponse response = new SensorExceptionResponse(
+                e.getMessage(), System.currentTimeMillis()
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     private MeasurementDto toMeasurementDto(Measurement measurement) {
         return modelMapper.map(measurement, MeasurementDto.class);
     }
 
-
     private Measurement toMeasurement(MeasurementDto measurementDto) {
         return modelMapper.map(measurementDto, Measurement.class);
-    }
-
-
-    private SensorDto toSensorDto(Sensor sensor) {
-        return modelMapper.map(sensor, SensorDto.class);
-    }
-
-    private Sensor toSensor(SensorDto sensorDto) {
-        return modelMapper.map(sensorDto, Sensor.class);
     }
 }

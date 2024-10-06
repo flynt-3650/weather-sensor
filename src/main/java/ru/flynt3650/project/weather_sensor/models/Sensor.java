@@ -2,8 +2,8 @@ package ru.flynt3650.project.weather_sensor.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +19,7 @@ public class Sensor {
 
     @Column(name = "name")
     @NotNull
+    @Size(min = 3, max = 30, message = "Invalid sensor name length")
     private String name;
 
     @OneToMany(mappedBy = "sensor")
